@@ -5,8 +5,8 @@ body {
     color: white;
 }
 
-content {
-    background: url('techtots.jpg') center;
+.full-screen-image {
+    background: url('techtot.jpg') center;
     background-size: cover;
     height: 100vh;
     display: flex;
