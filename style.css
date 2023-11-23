@@ -24,4 +24,5 @@ body, html {
 h1 {
   font-size: 2em; /* Adjust the font size as needed */
   margin: 0;
+  color: black;
 }
