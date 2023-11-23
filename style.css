@@ -1,19 +1,24 @@
 body {
     margin: 0;
-    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: white;
 }
 
-/* Ensure the image takes the full width and height of the viewport */
-.full-screen-image {
-    width: 100vw;
+content {
+    background: url('techtots.jpg') center;
+    background-size: cover;
     height: 100vh;
-    overflow: hidden; /* Hide any overflow beyond the viewport */
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Make the image responsive */
-.full-screen-image img {
-    width: 100%; /* Take 100% of the width of the parent container */
-    height: 100%; /* Take 100% of the height of the parent container */
-    object-fit: cover; /* Maintain the aspect ratio and cover the entire container */
+h1 {
+    letter-spacing: .2rem;
+    text-transform: uppercase;
+    background: black;
+    padding: 15px 20px;
+    margin: 0;
 }
