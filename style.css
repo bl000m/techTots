@@ -1,24 +1,27 @@
-body {
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-    color: white;
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
-.full-screen-image {
-    background: url('techtot.jpg') center;
-    background-size: cover;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.background {
+  background-image: url('background.jpg'); /* Replace 'background.jpg' with your actual image file name */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff; /* Change the text color to your preference */
+}
+
+.content {
+  max-width: 600px; /* Adjust the max-width as needed */
 }
 
 h1 {
-    letter-spacing: .2rem;
-    text-transform: uppercase;
-    background: black;
-    padding: 15px 20px;
-    margin: 0;
+  font-size: 2em; /* Adjust the font size as needed */
+  margin: 0;
 }
