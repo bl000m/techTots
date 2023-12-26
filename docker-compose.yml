@@ -1,13 +1,31 @@
 version: '3.8'
 
 services:
-  # Django Backend
-  backend:
+  front:
     build:
-      context: ./Docker/django
-    container_name: django_backend
+      context: ./Docker/Frontend
+    image: front
+    container_name: front
+    depends_on:
+      - back
+    env_file:
+      - .env
     volumes:
-      - ./app/back:/app
+      - ./App/front:/app
+    ports:
+      - 3000:3000
+    networks:
+      - techtots
+    restart: always
+
+  back:
+    image: python:3.9
+    container_name: django_backend
+    working_dir: /app
+    command: >
+      sh -c "pip install django==3.2.10 && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - back_vol:/app
     ports:
       - "8000:8000"
     depends_on:
@@ -16,46 +34,17 @@ services:
       - techtots
     restart: always
 
-  # Next.js Frontend
-  frontend:
-    build:
-      context: ./Docker/next
-    container_name: next_frontend
-    volumes:
-      - ./app/front:/app
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    networks:
-      - techtots
-    restart: always
-
-  # Nginx Reverse Proxy
-  nginx:
-    image: nginx:latest
-    container_name: nginx_reverse_proxy
-    ports:
-      - "80:80"
-    volumes:
-      - ./Docker/nginx/nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - backend
-      - frontend
-    networks:
-      - techtots
-    restart: always
-
-  # Database (Assuming you use PostgreSQL, adjust accordingly)
   database:
-    image: postgres:latest
-    container_name: postgres_database
+    image: postgres
+    container_name: database
+    volumes:
+      - techtots_database_vol:/var/lib/postgresql/data
+    expose:
+      - '5432'
     environment:
-      POSTGRES_DB: techtots_db
-      POSTGRES_USER: techtots_user
-      POSTGRES_PASSWORD: techtots_password
-    ports:
-      - "5432:5432"
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     networks:
       - techtots
     restart: always
@@ -64,18 +53,18 @@ volumes:
   front_vol:
     driver: local
     driver_opts:
-      device: ${PWD}/app/front
+      device: ${PWD}/App/front
       o: bind
       type: none
 
   back_vol:
     driver: local
     driver_opts:
-      device: ${PWD}/app/back
+      device: ${PWD}/App/back
       o: bind
       type: none
 
-  database_vol:
+  techtots_database_vol:
 
 networks:
   techtots:
